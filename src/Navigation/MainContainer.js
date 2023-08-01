@@ -1,55 +1,84 @@
 import * as React from "react";
+import { Image, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { LinearGradient } from "expo-linear-gradient";
 
-// Screens
-import HomeScreen from "./screens/HomeScreen";
-import DetailsScreen from "./screens/DetailsScreen";
-import SettingsScreen from "./screens/SettingScreen";
+import CalendarScreen from "./screens/CalendarScreen";
+import TaskScreen from "./screens/TaskScreen";
+import SettingScreen from "./screens/SettingScreen";
 
-//Screen names
-const homeName = "Home";
-const detailsName = "Details";
-const settingsName = "Settings";
+import AddIcon from "../../assets/AddIcon.png";
+import AddIconActive from "../../assets/AddIcon.png";
+import CalendarIcon from "../../assets/CalendarIcon.png";
+import CalendarIconActive from "../../assets/CalendarIcon.png";
+import settingsIcon from "../../assets/SettingIcon.png";
+import settingsIconActive from "../../assets/SettingIcon.png";
+
+const CalendarName = "Calendar";
+const TaskName = "Task";
+const SettingsName = "Settings";
 
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
-    <NavigationContainer >
-      <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
+    <LinearGradient
+      // Specify the colors and other properties for your LinearGradient here
+      colors={["#c31432", "#240b36"]}
+      style={styles.container}>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName={TaskName}
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let rn = route.name;
 
-            if (rn === homeName) {
-              iconName = focused ? "home" : "home-outline";
-            } else if (rn === detailsName) {
-              iconName = focused ? "list" : "list-outline";
-            } else if (rn === settingsName) {
-              iconName = focused ? "settings" : "settings-outline";
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          
-        })}
-        tabBarOptions={{
-          activeTintColor: "blue",
-          inactiveTintColor: "grey",
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70 },
-        }}>
-        <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={detailsName} component={DetailsScreen} />
-        <Tab.Screen name={settingsName} component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              if (rn === CalendarName) {
+                return (
+                  <Image
+                    source={focused ? CalendarIconActive : CalendarIcon}
+                    style={{ width: 40, height: 40 }}
+                  />
+                );
+              } else if (rn === TaskName) {
+                return (
+                  <Image
+                    source={focused ? AddIconActive : AddIcon}
+                    style={{ width: 50, height: 50 }}
+                  />
+                );
+              } else if (rn === SettingsName) {
+                return (
+                  <Image
+                    source={focused ? settingsIconActive : settingsIcon}
+                    style={{ width: 40, height: 40 }}
+                  />
+                );
+              }
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: "blue",
+            inactiveTintColor: "grey",
+            showLabel: false,
+            tabBarItemStyle: {
+              width: "33%", // adjust based on your requirement
+            },
+          }}>
+          <Tab.Screen name={CalendarName} component={CalendarScreen} />
+          <Tab.Screen name={TaskName} component={TaskScreen} />
+          <Tab.Screen name={SettingsName} component={SettingScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </LinearGradient>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default MainContainer;

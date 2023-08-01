@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, TextIput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-function DetailsScreen() {
+function SettingScreen() {
   return (
     <LinearGradient
       start={{ x: 0.5, y: 0 }}
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailsScreen;
+export default SettingScreen;
